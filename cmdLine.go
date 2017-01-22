@@ -10,19 +10,31 @@ import (
 func main() {
 	var s, sep string
 
-        fmt.Println("variable argument length ", len(os.Args))
-        fmt.Println(" first variable argument ", os.Args[0])
-        fmt.Println(" second variable argument ", os.Args[1])
-        fmt.Println(" second variable argument ", os.Args[2])
+	if len(os.Args) <= 1 {
+		fmt.Println("ERROR::No command line argument passed")
+		return
+	}
 
-        // Slice 
-        fmt.Println(" slice variable argument ", os.Args[1:])
+	fmt.Println("variable argument length ", len(os.Args))
 
-        /* For loop */
+	// Slice
+	fmt.Println(" slice variable argument ", os.Args[1:])
+
+	// Print arguments from end to first
 	for i := len(os.Args); i > 0; i-- {
 		s += sep + os.Args[i-1]
 		sep = " "
 	}
-
 	fmt.Println(s)
+
+	// make s empty string
+	s = ""
+
+	// To overcome unused variable requirement in go
+	for _, arg := range os.Args[1:] {
+		s += sep + arg
+		sep = " "
+	}
+	fmt.Println(s)
+
 }
